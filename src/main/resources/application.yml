@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: beer-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["*"]
+#        include: ["info", "health", "prometheus"]
+
+  metrics:
+    tags:
+      region: us-west-1
+      stack: chaos
+      env: prod
+      application-name: ${spring.application.name}
+
+#  health:
+#    defaults:
+#      enabled: false

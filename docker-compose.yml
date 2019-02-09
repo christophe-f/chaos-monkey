@@ -1,0 +1,35 @@
+version: '3.1'
+
+#volumes:
+#  prometheus_data: {}
+#  grafana_data: {}
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+    - 6379:6379
+
+  consul:
+    image: consul:latest
+    ports:
+      - 8500:8500
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+
+#  prometheus:
+#    image: prom/prometheus:latest
+#    ports:
+#      - 9090:9090
+#    depends_on:
+#      - consul
+#    volumes:
+#      - ./:/etc/prometheus/
+#    command:
+#      - '--config.file=/etc/prometheus/prometheus.yml'
+#
+#  grafana:
+#    image: grafana/grafana
+#    ports:
+#      - 3000:3000
+#    user: "104"
