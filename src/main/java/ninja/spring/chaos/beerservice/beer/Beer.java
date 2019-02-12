@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 public class Beer {
     private String id;
     private String name;
-//    private String country;
-//    private String ibu;
-//    private String breweryName;
-//    private String ratings;
+    private String categoryName;
+    private String styleName;
+    private Double abv;
+    private Integer ibu;
+    private Integer srm;
+    private String country;
+    private String breweryName;
 }
