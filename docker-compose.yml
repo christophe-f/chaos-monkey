@@ -1,8 +1,8 @@
-version: '3.1'
+version: '2'
 
-#volumes:
+volumes:
 #  prometheus_data: {}
-#  grafana_data: {}
+  grafana-storage: {}
 
 services:
   redis:
@@ -14,22 +14,28 @@ services:
     image: consul:latest
     ports:
       - 8500:8500
-    environment:
-      CONSUL_BIND_INTERFACE: eth0
+    network_mode: "host"
 
-#  prometheus:
-#    image: prom/prometheus:latest
-#    ports:
-#      - 9090:9090
-#    depends_on:
-#      - consul
-#    volumes:
-#      - ./:/etc/prometheus/
-#    command:
-#      - '--config.file=/etc/prometheus/prometheus.yml'
-#
-#  grafana:
-#    image: grafana/grafana
-#    ports:
-#      - 3000:3000
-#    user: "104"
+
+  #    environment:
+#      CONSUL_BIND_INTERFACE: eth0
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    depends_on:
+      - consul
+    volumes:
+      - ./:/etc/prometheus/
+    network_mode: "host"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    user: "104"
+    volumes:
+      - grafana-storage:/var/lib/grafana

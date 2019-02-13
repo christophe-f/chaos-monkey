@@ -36,9 +36,10 @@ chaos:
       controller: false
       repository: false
       rest-controller: true
-      service: false
+      service: true
     assaults:
-      latency-active: true
-      latency-range-start: 2000
-      latency-range-end: 5000
+      latency-active: false
+      latency-range-start: 500
+      latency-range-end: 2000
       exceptions-active: true
+      level: 2
