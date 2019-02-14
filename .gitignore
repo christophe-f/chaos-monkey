@@ -1,4 +1,5 @@
 /target/
+**/target
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -23,3 +24,7 @@
 /nbdist/
 /.nb-gradle/
 /build/
+
+
+### Docker volumes ###
+prometheus

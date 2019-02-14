@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: beer-service
+
+  jackson:
+    property-naming-strategy: com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["*"]
+  #        include: ["info", "health", "prometheus", "chaosmonkey"]
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles:
+        http.server.requests: 0.5, 0.9, 0.95, 0.99
+      sla:
+        http.server.requests: 100ms, 200ms, 400ms
+
+  endpoint:
+    chaosmonkey:
+      enabled: true
+
+
+server:
+  port: 8081
+
+---
+spring:
+  profiles:
+    active: chaos-monkey
+
+chaos:
+  monkey:
+    watcher:
+      component: false
+      controller: false
+      repository: false
+      rest-controller: true
+      service: true
