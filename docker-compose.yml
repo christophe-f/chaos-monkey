@@ -9,6 +9,7 @@ services:
     image: redis:alpine
     ports:
     - 6379:6379
+    network_mode: "host"
 
   consul:
     image: consul:latest
@@ -39,3 +40,4 @@ services:
     user: "104"
     volumes:
       - grafana-storage:/var/lib/grafana
+    network_mode: "host"
