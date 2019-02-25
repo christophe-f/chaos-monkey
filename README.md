@@ -1,45 +1,56 @@
-User service
+# DEMO Chaos Monkey for Spring Boot
 
+This is a demo for GrafanaCon LA 2019 
 
+## Requirements
+* Java 8+
+* Docker & Docker Compose
+* Lombok (if you are running in an IDE)
 
-Requirements
-* Java 8+ (The default is current using Java 11)
-* Docker (You can run your own Redis)
-* Lombok - I use Lombok in this example to eliminate the boilerplate code for constructors and so-called "data class" methods (accessors/mutators, equals(), toString(), & hashCode())
+## Run the demo 
 
+### Start docker compose
 
+Docker compose will start locally a Consul, Redis, Prometheus & Grafana instances
 
-
-Run Redis
 ```
    sudo docker-compose up
 ``` 
 
-Run Prometheus
+### Run the client & beer service apps
 ```
-   docker run redis
+   ./start-apps.sh
 ``` 
 
+## Check that everything is running fine
+* [Consul](http://localhost:8500/ui)
+* [Prometheus](http://localhost:9090/service-discovery)
+* [Grafana](http://localhost:3000)
 
-Run Grafana
+## Import the Grafana Dashboard
+Login to Grafana and go to Dashboards -> Manage -> Import page. Then import the dashboard ID `9845` or the JSON located in the Grafana folder of this project.
+
+
+## Run an experiment
+
+### Enable Chaos Monkey
 ```
-   docker run redis
-``` 
-
-
-
-
-Run the app
+    curl -X POST http://localhost:8081/actuator/chaosmonkey/enable
 ```
-   mvn springBoot:run
-``` 
+
+### Set the assault
+```
+    curl -X POST \
+      http://localhost:8081/actuator/chaosmonkey/assaults \
+      -H 'Content-Type: application/json' \
+      -d ' {
+        "level": 10,
+        "latency_range_start": 2000,
+        "latency_range_end": 5000,
+        "latency_active": false,
+        "exceptions_active": false
+        }'
+```
 
 
-http://localhost:8080/actuator/prometheus
-
-http://localhost:8500/ui
-
-
-
-thanks to https://data.opendatasoft.com/explore/dataset/open-beer-database%40public-us/table/
-
+Thanks to the [Open Beer Database](https://data.opendatasoft.com/explore/dataset/open-beer-database%40public-us/table/) for providing a great list of beers.  

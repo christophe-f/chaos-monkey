@@ -1,4 +1,40 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "5.4.3"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": "5.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": "5.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,8 +51,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 1,
-  "iteration": 1550116156145,
+  "id": null,
+  "iteration": 1551138154173,
   "links": [],
   "panels": [
     {
@@ -33,6 +69,93 @@
       "type": "row"
     },
     {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "#299c46",
+        "#d44a3a"
+      ],
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 55,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "chaos_monkey_status{application=\"$application\"}",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "0, 1, 2",
+      "title": "Chaos Monkey Status",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "Disabled",
+          "value": "0"
+        },
+        {
+          "op": "=",
+          "text": "Enabled, uh oh",
+          "value": "1"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -40,8 +163,8 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 0,
+        "w": 5,
+        "x": 4,
         "y": 1
       },
       "id": 46,
@@ -68,14 +191,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "chaos_monkey_application_request_count_total{application=\"$application\", type=\"total\"}",
+          "expr": "increase(chaos_monkey_application_request_count_total{application=\"$application\", type=\"total\"}[15s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Total requests",
           "refId": "A"
         },
         {
-          "expr": "chaos_monkey_application_request_count_total{application=\"$application\", type=\"assaulted\"}",
+          "expr": "increase(chaos_monkey_application_request_count_total{application=\"$application\", type=\"assaulted\"}[15s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Assaulted requests",
@@ -131,8 +254,8 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 6,
+        "w": 5,
+        "x": 9,
         "y": 1
       },
       "id": 50,
@@ -159,7 +282,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "chaos_monkey_assault_latency_count_total{application=\"$application\"}",
+          "expr": "increase(chaos_monkey_assault_latency_count_total{application=\"$application\"}[15s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -190,7 +313,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -215,8 +338,8 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 12,
+        "w": 5,
+        "x": 14,
         "y": 1
       },
       "id": 51,
@@ -243,7 +366,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "chaos_monkey_assault_latency_count_gauge{application=\"$application\"}",
+          "expr": "increase(chaos_monkey_assault_latency_count_gauge{application=\"$application\"}[15s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -274,7 +397,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -299,8 +422,8 @@
       "fill": 1,
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 18,
+        "w": 5,
+        "x": 19,
         "y": 1
       },
       "id": 53,
@@ -327,7 +450,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "chaos_monkey_assault_exception_count_total{application=\"$application\"}",
+          "expr": "increase(chaos_monkey_assault_exception_count_total{application=\"$application\"}[15s])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -396,7 +519,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "decimals": null,
       "format": "locale",
       "gauge": {
@@ -480,7 +603,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -560,7 +683,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "decimals": null,
       "format": "locale",
       "gauge": {
@@ -641,7 +764,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "decimals": null,
       "format": "locale",
       "gauge": {
@@ -718,7 +841,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -833,7 +956,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -913,7 +1036,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -993,7 +1116,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -1073,7 +1196,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -1153,7 +1276,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -1233,7 +1356,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -1309,7 +1432,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "gridPos": {
         "h": 11,
@@ -1345,28 +1468,28 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.5, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.5, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[15s])) by (le))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "50%",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.9, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.9, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[15s])) by (le))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "90%",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[15s])) by (le))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "95%",
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(http_server_requests_seconds_bucket{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[15s])) by (le))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "99%",
@@ -1407,7 +1530,7 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -1420,7 +1543,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -1468,7 +1591,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(http_server_requests_seconds_count{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[1m]) ",
+          "expr": "increase(http_server_requests_seconds_count{application=\"$application\", instance=~\"$instance\", uri=~\"$uri\"}[15s]) ",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -1522,7 +1645,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -1607,7 +1730,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROMETHEUS}",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -1706,7 +1829,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "${DS_PROMETHEUS}",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -1794,7 +1917,7 @@
             "rgba(237, 129, 40, 0.89)",
             "#d44a3a"
           ],
-          "datasource": "Prometheus",
+          "datasource": "${DS_PROMETHEUS}",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -1870,7 +1993,7 @@
       "type": "row"
     }
   ],
-  "refresh": "10s",
+  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -1878,11 +2001,8 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "beer-service",
-          "value": "beer-service"
-        },
-        "datasource": "Prometheus",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(application)",
         "hide": 0,
         "includeAll": false,
@@ -1903,11 +2023,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "Prometheus",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(http_server_requests_seconds_count{application=\"$application\"}, instance)",
         "hide": 0,
         "includeAll": true,
@@ -1928,11 +2045,8 @@
       },
       {
         "allValue": null,
-        "current": {
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "Prometheus",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
         "definition": "label_values(http_server_requests_seconds{application=\"$application\", instance=~\"$instance\"}, uri)",
         "hide": 0,
         "includeAll": true,
@@ -1954,7 +2068,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1985,5 +2099,5 @@
   "timezone": "",
   "title": "Spring Boot Application",
   "uid": "3jEZhfHiz",
-  "version": 5
+  "version": 7
 }

@@ -20,8 +20,6 @@ management:
     distribution:
       percentiles:
         http.server.requests: 0.5, 0.9, 0.95, 0.99
-      sla:
-        http.server.requests: 100ms, 200ms, 400ms
 
   endpoint:
     chaosmonkey:
