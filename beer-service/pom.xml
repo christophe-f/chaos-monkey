@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.2.RELEASE</version>
+		<version>2.6.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ninja.spring.chaos-monkey</groupId>
@@ -15,9 +15,8 @@
 	<description>Beer service for the chaos experiment workshop</description>
 
 	<properties>
-		<java.version>8</java.version>
-		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
-		<micrometer.version>1.1.1</micrometer.version>
+		<java.version>17</java.version>
+		<micrometer.version>1.8.2</micrometer.version>
 	</properties>
 
 	<dependencies>
@@ -34,23 +33,15 @@
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
-			<version>${micrometer.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
+<!--			<version>${micrometer.version}</version>-->
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>chaos-monkey-spring-boot</artifactId>
-			<version>2.0.2</version>
+			<version>2.5.4</version>
 		</dependency>
 
 		<dependency>
@@ -64,18 +55,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>

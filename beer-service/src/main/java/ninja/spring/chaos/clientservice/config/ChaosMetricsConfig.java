@@ -3,9 +3,6 @@ package ninja.spring.chaos.clientservice.config;
 import de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeySettings;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
