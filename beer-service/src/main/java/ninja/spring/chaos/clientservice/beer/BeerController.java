@@ -3,7 +3,6 @@ package ninja.spring.chaos.clientservice.beer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -16,7 +15,7 @@ public class BeerController {
     }
 
     @GetMapping("/beers")
-    public Flux<Beer> all() {
+    public Mono<Beer> all() {
         return beerService.getBeers();
     }
 

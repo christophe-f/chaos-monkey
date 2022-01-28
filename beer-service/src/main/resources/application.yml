@@ -7,6 +7,8 @@ spring:
     default-property-inclusion: non_null
     deserialization:
       fail-on-unknown-properties: false
+  redis:
+    host: redis
 
 management:
   endpoints:
@@ -24,7 +26,6 @@ management:
   endpoint:
     chaosmonkey:
       enabled: true
-
 
 server:
   port: 8081
