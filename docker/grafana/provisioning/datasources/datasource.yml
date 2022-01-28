@@ -1,6 +1,6 @@
 apiVersion: 1
 
-#deleteDatasources:
+deleteDatasources:
 #  - name: Prometheus for Chaos Monkey
 #    orgId: 1
 

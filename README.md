@@ -1,44 +1,53 @@
 # DEMO Chaos Monkey for Spring Boot
 
-This is a demo for GrafanaCon LA 2019 
+This is a demo using Chaos Monkey for Spring Boot to demonstrate chaos engineering at the app level.
+
+The provided `docker-compose` will start Prometheus and Grafana to observe what's happening when failures and exceptions are injected into the app.
+
+This demo was originally used at GrafanaCon LA 2019, various JUGs and Enterprise demos.  
 
 ## Requirements
-* Java 8+
-* Docker & Docker Compose
-* Lombok (if you are running in an IDE)
+* Docker
+* Docker Compose
 
 ## Run the demo 
 
-### Start docker compose
+### 1. Start docker-compose
 
-Docker compose will start locally a Consul, Redis, Prometheus & Grafana instances
+Docker  will start containers for Redis, Prometheus, Grafana, Locust and the 2 Spring Boot applications.
 
-```
-   sudo docker-compose up
+```shell
+cd script
+./start-containers.sh
 ``` 
 
-### Run the client & beer service apps
-```
-   ./start-apps.sh
+### 2. Verify that the containers are running
+* Prometheus is running at [http://localhost:9090](http://localhost:9090) 
+* Grafana is running  at [http://localhost:3000](http://localhost:3000)
+* Locust is running at [http://localhost:8089](http://localhost:8089)
+
+### 3. Import the Grafana Dashboard
+
+You need to import manually the dashboard.
+
+Log in to Grafana (admin/admin) and go to Dashboards -> Manage -> Import page. Then upload the JSON file located in the `/docker/grafana/dashboards` folder of this project.
+
+The Prometheus Datasource is set up automatically.
+
+
+### 4. Simulate user traffic
+
+Open the [Locust Dashboard](http://localhost:8089), add 50 users and click on the `Start swarming` button.
+
+### 5. Run an experiment
+
+#### 5.1 Enable Chaos Monkey
+
+```shell
+./enable-cmsb.sh
 ``` 
 
-## Check that everything is running fine
-* [Consul](http://localhost:8500/ui)
-* [Prometheus](http://localhost:9090/service-discovery)
-* [Grafana](http://localhost:3000)
-
-## Import the Grafana Dashboard
-Login to Grafana and go to Dashboards -> Manage -> Import page. Then import the dashboard ID `9845` or the JSON located in the Grafana folder of this project.
-
-
-## Run an experiment
-
-### Enable Chaos Monkey
-```
-    curl -X POST http://localhost:8081/actuator/chaosmonkey/enable
-```
-
-### Set the assault
+#### 5.2 Set the assault
 ```
     curl -X POST \
       http://localhost:8081/actuator/chaosmonkey/assaults \
@@ -52,5 +61,26 @@ Login to Grafana and go to Dashboards -> Manage -> Import page. Then import the 
         }'
 ```
 
+#### 5.3 Check Grafana Dashboard
+
+
+#### 5.4 Fix and restart
+
+Update the code and restart the client
+
+```shell
+./restart-client.sh
+``` 
+
+#### 5.4 Check Grafana Dashboard
+
+
+### 6. Stop everything
+
+Run the following script to stop and clean up all the containers.
+
+```shell
+./stop-containers.sh
+``` 
 
 Thanks to the [Open Beer Database](https://data.opendatasoft.com/explore/dataset/open-beer-database%40public-us/table/) for providing a great list of beers.  

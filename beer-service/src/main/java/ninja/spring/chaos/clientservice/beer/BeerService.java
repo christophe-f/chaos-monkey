@@ -2,7 +2,6 @@ package ninja.spring.chaos.clientservice.beer;
 
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -14,9 +13,10 @@ class BeerService {
         this.beerOps = beerOps;
     }
 
-    Flux<Beer> getBeers() {
+    Mono<Beer> getBeers() {
         return beerOps.keys("*")
-                .flatMap(beerOps.opsForValue()::get);
+                .flatMap(beerOps.opsForValue()::get)
+                .take(100).next();
     }
 
     Mono<Beer> getBeerById(String beerId) {
